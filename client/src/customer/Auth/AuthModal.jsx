@@ -37,8 +37,8 @@ const AuthModal = ({ handleClose, open }) => {
             {location.pathname === "/login" ? "Sign In" :
               "Sign Up"}
           </Typography>
-          {location.pathname === "/login" ? <LoginForm /> :
-            <RegisterForm />}
+          {location.pathname === "/login" ? <LoginForm handleClose={handleClose}/> :
+            <RegisterForm handleClose={handleClose}/>}
         </Box>
       </Modal>
     </div>

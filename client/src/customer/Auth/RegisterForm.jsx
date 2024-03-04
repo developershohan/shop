@@ -33,7 +33,7 @@ const handleInputChange = (e) => {
 const handleSubmit = async (e) => {
   e.preventDefault();
   try {
-    dispatch(signInPending)
+    dispatch(signInPending())
     // Using axios for the POST request
 
     const res = await axios.post('http://localhost:5454/auth/register', input);
@@ -126,8 +126,8 @@ const handleSubmit = async (e) => {
         </FormControl>
           </Grid>
           <Grid item xs={12} >
-            <Button type="submit" className=" w-full " variant="contained" color="primary" size="large">
-              Sign Up
+            <Button disabled={loader} type="submit" className=" w-full " variant="contained" color="primary" size="large">
+              {loader ? "Loading.." : "Sign Up"}
             </Button>
           </Grid>
         </Grid>
