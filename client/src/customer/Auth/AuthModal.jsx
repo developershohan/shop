@@ -1,5 +1,7 @@
 // AuthModal.js
 import { Modal, Box, Typography } from "@mui/material";
+import { Button } from "@mui/material"
+
 
 const style = {
   position: 'absolute',
@@ -27,7 +29,16 @@ const AuthModal = ({ handleClose, open, mode, LoginFormComponent, RegisterFormCo
           {mode === "login" ? "Sign In" : "Sign Up"}
         </Typography>
         {mode === "login" ? <LoginFormComponent handleClose={handleClose} /> : <RegisterFormComponent handleClose={handleClose} />}
-        <button onClick={toggleMode}>Switch to {mode === "login" ? "Sign Up" : "Sign In"}</button>
+        <button onClick={toggleMode}>{mode === "login" ? <div className="form-footer flex gap-1 align-middle justify-center mt-3">
+          <p>{`If you don't have account?`}</p>
+          <Button variant="text" color="primary" className=" font-semibold" sx={{ p: 0 }}  >
+            Register</Button>
+        </div> : <div className="form-footer flex gap-1 align-middle justify-center mt-3">
+          <p>Already have an account?</p>
+          <Button variant="text" color="primary" className=" font-semibold" sx={{ p: 0 }}  >
+
+            Login</Button>
+        </div>}</button>
       </Box>
     </Modal>
   );

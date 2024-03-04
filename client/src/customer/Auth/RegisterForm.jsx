@@ -142,12 +142,12 @@ const handleSubmit = async (e) => {
         </Grid>
       </form>
       <p> {error && error.data.message} </p>
-      <div className="form-footer flex gap-1 align-middle justify-center mt-3">
+      {/* <div className="form-footer flex gap-1 align-middle justify-center mt-3">
         <p>Already have an account?</p>
-        <Button onClick={() => handleOpen("login") ,handleClose("register")} variant="text" color="primary" className=" font-semibold" sx={{ p: 0 }}  >
+        <Button onClick={() => handleOpen("login") } variant="text" color="primary" className=" font-semibold" sx={{ p: 0 }}  >
 
           Login</Button>
-      </div>
+      </div> */}
       <AuthModal
         open={openAuthModal}
         handleClose={handleClose}

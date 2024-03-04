@@ -31,6 +31,7 @@ const LoginForm = ({ handleClose }) => {
     // Toggle between "login" and "register" modes
     setMode((prevMode) => (prevMode === "login" ? "register" : "login"));
   };
+  
   const handleInputChange = (e) => {
     setInput((prevState) => ({
       ...prevState,
@@ -119,11 +120,11 @@ const LoginForm = ({ handleClose }) => {
         </Grid>
       </form>
       <p> {error && error.data.message} </p>
-      <div className="form-footer flex gap-1 align-middle justify-center mt-3">
+      {/* <div className="form-footer flex gap-1 align-middle justify-center mt-3">
         <p>{`If you don't have account?`}</p>
-        <Button onClick={() => handleOpen("register") ,handleClose("login")} variant="text" color="primary" className=" font-semibold" sx={{ p: 0 }}  >
+        <Button onClick={() => handleOpen("register") } variant="text" color="primary" className=" font-semibold" sx={{ p: 0 }}  >
           Register</Button>
-      </div>
+      </div> */}
       <AuthModal
         open={openAuthModal}
         handleClose={handleClose}
