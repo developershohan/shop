@@ -1,7 +1,4 @@
-// AuthModal.js
-import { Modal, Box, Typography } from "@mui/material";
-import { Button } from "@mui/material"
-
+import { Modal, Box, Typography, Button } from "@mui/material";
 
 const style = {
   position: 'absolute',
@@ -28,17 +25,13 @@ const AuthModal = ({ handleClose, open, mode, LoginFormComponent, RegisterFormCo
         <Typography id="modal-modal-title" sx={{ fontWeight: "bold" }} variant="h6" component="h2" mb={2}>
           {mode === "login" ? "Sign In" : "Sign Up"}
         </Typography>
-        {mode === "login" ? <LoginFormComponent handleClose={handleClose} /> : <RegisterFormComponent handleClose={handleClose} />}
-        <button onClick={toggleMode}>{mode === "login" ? <div className="form-footer flex gap-1 align-middle justify-center mt-3">
-          <p>{`If you don't have account?`}</p>
-          <Button variant="text" color="primary" className=" font-semibold" sx={{ p: 0 }}  >
-            Register</Button>
-        </div> : <div className="form-footer flex gap-1 align-middle justify-center mt-3">
-          <p>Already have an account?</p>
-          <Button variant="text" color="primary" className=" font-semibold" sx={{ p: 0 }}  >
-
-            Login</Button>
-        </div>}</button>
+        {mode === "login" ? (LoginFormComponent && <LoginFormComponent handleClose={handleClose} />) : (RegisterFormComponent && <RegisterFormComponent handleClose={handleClose} />)}
+        <div className="form-footer flex gap-1 align-middle justify-center mt-3">
+          <p>{mode === "login" ? `If you don't have an account?` : `Already have an account?`}</p>
+          <Button variant="text" color="primary" className="font-semibold" sx={{ p: 0 }} onClick={toggleMode}>
+            {mode === "login" ? "Register" : "Login"}
+          </Button>
+        </div>
       </Box>
     </Modal>
   );
