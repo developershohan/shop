@@ -5,11 +5,13 @@ import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@her
 import "./Navbar.scss"
 import { Link } from 'react-router-dom'
 import AuthModal from '../../Auth/AuthModal'
+import {useSelector} from "react-redux"
 
 
 
 
 const navigation = {
+  
   categories: [
     {
       id: 'women',
@@ -138,6 +140,7 @@ function classNames(...classes) {
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [openAuthModal, setOpenAuthModal] = useState(false)
+  const {user} = useSelector((state)=>state.user)
 
 
   const handleClose = () => {
@@ -272,6 +275,7 @@ export default function Navbar() {
                       Create account
                     </a>
                   </div>
+                  <Link to="/accont" className='block font-medium text-gray-900' >Account</Link>
                 </div>
 
                 <div className="border-t border-gray-200 px-4 py-6">
@@ -423,15 +427,33 @@ export default function Navbar() {
 
 
               <div className="ml-auto flex items-center">
-                <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                  <a onClick={handleOpen} href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                    Sign in
-                  </a>
-                  <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                  <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-                    Create account
-                  </a>
-                </div>
+
+                
+
+              {user ? 
+                  <Link to="/accont" className=' font-medium text-gray-900' >Account</Link>
+
+                    
+                    :
+                    
+           (    
+            <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+
+            <a onClick={handleOpen} href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+              Sign in
+            </a>
+            <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+            <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+              Create account
+            </a>
+            
+          </div>
+            
+) }
+
+
+
+
 
                 <div className="hidden lg:ml-8 lg:flex">
                   <a href="#" className="flex items-center text-gray-700 hover:text-gray-800">
