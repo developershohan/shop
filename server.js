@@ -14,6 +14,9 @@ import dotenv from "dotenv"
 import cookieParser from 'cookie-parser';
 import errorHandler from './middleware/errorHandler.js';
 import cors from "cors"
+import path from "path"
+
+
 
 // initialization
 const app = express()
@@ -27,7 +30,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // static folder
-app.use(express.static("public"));
+
+const __dirname = path.resolve()
+console.log(__dirname);
+// app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "./client/dist")));
+
+app.get("*",(req,res)=>{
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
+})
+
+
+
 app.use(cookieParser())
 app.use(cors())
 
