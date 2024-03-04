@@ -3,26 +3,56 @@ import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import axios from "axios"
+import { useDispatch, useSelector } from "react-redux"
+import { signInPending, signInRejected, signInSuccess } from "../../features/auth/authSlice";
 
 
 const RegisterForm = () => {
 
   const navigate = useNavigate()
+  const [input, setInput] = useState({
+    fname: "",
+    lname: "",
+    auth: "",
+    password: "",
+})
+const dispatch = useDispatch()
+const { loader, error } = useSelector((state) => state.user)
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-    const data = new FormData(e.currentTarget)
 
-    const userData = {
-      firstName: data.get('firstName'),
-      lastName: data.get('lastName'),
-      email: data.get('email'),
-      password: data.get('password'),
 
-    }
-    console.log(userData);
-  }
+const handleInputChange = (e) => {
+  setInput((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value
+  }))
+}
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    dispatch(signInPending)
+    // Using axios for the POST request
+
+    const res = await axios.post('http://localhost:5454/auth/register', input);
+    dispatch(signInSuccess(res.data))
+    navigate("/login")
+
+
+} catch (error) {
+  if (error.response) {
+    // The request was made and the server responded with a status code
+    // that falls out of the range of 2xx
+    dispatch(signInRejected(error.response))
+
+    // setErrorMsg(error.response.data.message)// And even the headers
+}
+    // Handle error situation
+} 
+
+}
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -36,32 +66,38 @@ const RegisterForm = () => {
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} >
             <TextField
-              id="firstName"
+              id="fname"
               label="First Name"
               required
-              name="firstName"
+              name="fname"
               fullWidth
               autoComplete="given-name"
+              onChange={handleInputChange}
+              value={input.fname}
             />
           </Grid>
           <Grid item xs={12} sm={6} >
             <TextField
-              id="lastName"
+              id="lname"
               label="Last Name"
               required
-              name="lastName"
+              name="lname"
               fullWidth
               autoComplete="given-name"
+              onChange={handleInputChange}
+              value={input.lname}
             />
           </Grid>
           <Grid item xs={12} >
             <TextField
-              id="email"
-              label="Email"
+              id="auth"
+              label="Email Address"
               required
-              name="email"
+              name="auth"
               fullWidth
               autoComplete="given-name"
+              onChange={handleInputChange}
+              value={input.auth}
             />
           </Grid>
           <Grid item xs={12} >
@@ -70,6 +106,9 @@ const RegisterForm = () => {
           <OutlinedInput
             id="outlined-adornment-password"
             type={showPassword ? 'text' : 'password'}
+            name="password"
+            onChange={handleInputChange}
+            value={input.password}
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
@@ -93,7 +132,7 @@ const RegisterForm = () => {
           </Grid>
         </Grid>
       </form>
-
+      <p> {error && error.data.message} </p>
       <div className="form-footer flex gap-1 align-middle justify-center mt-3">
         <p>Already have an account?</p>
         <Button onClick={()=>navigate("/login")} variant="text" color="primary" className=" font-semibold" sx={{ p: 0 }}  >

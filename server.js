@@ -13,6 +13,7 @@ import reviewRouter from "./routers/review.route.js"
 import dotenv from "dotenv"
 import cookieParser from 'cookie-parser';
 import errorHandler from './middleware/errorHandler.js';
+import cors from "cors"
 
 // initialization
 const app = express()
@@ -28,6 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 // static folder
 app.use(express.static("public"));
 app.use(cookieParser())
+app.use(cors())
 
 
 // error handler

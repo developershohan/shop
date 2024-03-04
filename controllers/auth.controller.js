@@ -59,8 +59,9 @@ export const registerUser = asyncHandler(async (req, res,next) => {
   const hashPass = await bcrypt.hash(password, 10);
 
   // register user
+  let user;
 try {
-  const user = await User.create({
+ user = await User.create({
     fname: fname,
     lname: lname,
     email: authEmail,
@@ -72,7 +73,7 @@ try {
 } catch (error) {
   next(error);
 }
-  if (User) {
+  if (user) {
     // send token to cookie
     const activationToken = jwt.sign(
       { auth },
