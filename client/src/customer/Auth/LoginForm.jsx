@@ -1,30 +1,43 @@
 import { Grid, TextField, Button, OutlinedInput, InputLabel, FormControl, InputAdornment, IconButton } from "@mui/material"
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { signInPending, signInRejected, signInSuccess } from "../../features/auth/authSlice";
+import AuthModal from "./AuthModal";
+import RegisterForm from "./RegisterForm";
 
 
 const LoginForm = ({ handleClose }) => {
-  const navigate = useNavigate()
+
   // const [errorMsg, setErrorMsg] = useState(null)
 
   const [input, setInput] = useState({
     auth: "",
     password: "",
   })
+  const [mode, setMode] = useState("login"); 
+  const [openAuthModal, setOpenAuthModal] = useState(false)
+  const handleOpen = (mode) => {
+
+    setMode(mode); // Set the mode when opening the modal
+    setOpenAuthModal(true);
+
+  };
   const dispatch = useDispatch()
   const { loader, error } = useSelector((state) => state.user)
-
+  const toggleMode = () => {
+    // Toggle between "login" and "register" modes
+    setMode((prevMode) => (prevMode === "login" ? "register" : "login"));
+  };
   const handleInputChange = (e) => {
     setInput((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value
     }))
   }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -108,10 +121,16 @@ const LoginForm = ({ handleClose }) => {
       <p> {error && error.data.message} </p>
       <div className="form-footer flex gap-1 align-middle justify-center mt-3">
         <p>{`If you don't have account?`}</p>
-        <Button onClick={() => navigate("/register")} variant="text" color="primary" className=" font-semibold" sx={{ p: 0 }}  >
-
+        <Button onClick={() => handleOpen("register") ,handleClose("login")} variant="text" color="primary" className=" font-semibold" sx={{ p: 0 }}  >
           Register</Button>
       </div>
+      <AuthModal
+        open={openAuthModal}
+        handleClose={handleClose}
+        mode={mode} // Pass the mode prop to AuthModal
+        RegisterFormComponent={RegisterForm}
+        toggleMode={toggleMode}
+      />
     </div>
   )
 }

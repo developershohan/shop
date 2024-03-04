@@ -1,9 +1,5 @@
-import { Modal, Box, Typography } from "@mui/material"
-import RegisterForm from "./RegisterForm";
-
-import { useLocation } from 'react-router-dom';
-import LoginForm from "./LoginForm";
-
+// AuthModal.js
+import { Modal, Box, Typography } from "@mui/material";
 
 const style = {
   position: 'absolute',
@@ -18,31 +14,23 @@ const style = {
   pb: 3,
 };
 
-
-const AuthModal = ({ handleClose, open }) => {
-  const location = useLocation()
-
+const AuthModal = ({ handleClose, open, mode, LoginFormComponent, RegisterFormComponent, toggleMode }) => {
   return (
-    <div>
+    <Modal
+      open={open}
+      onClose={handleClose}
+      aria-labelledby="modal-modal-title"
+      aria-describedby="modal-modal-description"
+    >
+      <Box sx={style}>
+        <Typography id="modal-modal-title" sx={{ fontWeight: "bold" }} variant="h6" component="h2" mb={2}>
+          {mode === "login" ? "Sign In" : "Sign Up"}
+        </Typography>
+        {mode === "login" ? <LoginFormComponent handleClose={handleClose} /> : <RegisterFormComponent handleClose={handleClose} />}
+        <button onClick={toggleMode}>Switch to {mode === "login" ? "Sign Up" : "Sign In"}</button>
+      </Box>
+    </Modal>
+  );
+};
 
-
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" sx={{ fontWeight: "bold" }} variant="h6" component="h2" mb={2}>
-            {location.pathname === "/login" ? "Sign In" :
-              "Sign Up"}
-          </Typography>
-          {location.pathname === "/login" ? <LoginForm handleClose={handleClose}/> :
-            <RegisterForm handleClose={handleClose}/>}
-        </Box>
-      </Modal>
-    </div>
-  )
-}
-
-export default AuthModal
+export default AuthModal;

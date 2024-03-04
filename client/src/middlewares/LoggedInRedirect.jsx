@@ -6,7 +6,7 @@ const LoggedInRedirect = () => {
   const { loginState, user } = useSelector((state) => state.user);
 console.log(user);
 
-return loginState ? (<Outlet/>) : <Navigate to="/login"/>
+return loginState ? (<Outlet/>) : <Navigate to="/"/>
 
 };
 

@@ -6,9 +6,11 @@ import { useState } from "react";
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
 import { signInPending, signInRejected, signInSuccess } from "../../features/auth/authSlice";
+import AuthModal from "./AuthModal";
+import LoginForm from "./LoginForm";
 
 
-const RegisterForm = () => {
+const RegisterForm = ({ handleClose }) => {
 
   const navigate = useNavigate()
   const [input, setInput] = useState({
@@ -20,7 +22,14 @@ const RegisterForm = () => {
 const dispatch = useDispatch()
 const { loader, error } = useSelector((state) => state.user)
 
+const [mode, setMode] = useState("login"); 
+const [openAuthModal, setOpenAuthModal] = useState(false)
+const handleOpen = (mode) => {
 
+  setMode(mode); // Set the mode when opening the modal
+  setOpenAuthModal(true);
+
+};
 
 
 const handleInputChange = (e) => {
@@ -135,10 +144,16 @@ const handleSubmit = async (e) => {
       <p> {error && error.data.message} </p>
       <div className="form-footer flex gap-1 align-middle justify-center mt-3">
         <p>Already have an account?</p>
-        <Button onClick={()=>navigate("/login")} variant="text" color="primary" className=" font-semibold" sx={{ p: 0 }}  >
+        <Button onClick={() => handleOpen("login") ,handleClose("register")} variant="text" color="primary" className=" font-semibold" sx={{ p: 0 }}  >
 
           Login</Button>
       </div>
+      <AuthModal
+        open={openAuthModal}
+        handleClose={handleClose}
+        mode={mode} // Pass the mode prop to AuthModal
+        LoginFormComponent={LoginForm}
+      />
     </div>
   )
 }

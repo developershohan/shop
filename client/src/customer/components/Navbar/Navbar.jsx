@@ -5,13 +5,15 @@ import { Bars3Icon, MagnifyingGlassIcon, ShoppingBagIcon, XMarkIcon } from '@her
 import "./Navbar.scss"
 import { Link } from 'react-router-dom'
 import AuthModal from '../../Auth/AuthModal'
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux"
+import LoginForm from '../../Auth/LoginForm'
+import RegisterForm from '../../Auth/RegisterForm'
 
 
 
 
 const navigation = {
-  
+
   categories: [
     {
       id: 'women',
@@ -138,18 +140,24 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+
   const [open, setOpen] = useState(false)
   const [openAuthModal, setOpenAuthModal] = useState(false)
-  const {user} = useSelector((state)=>state.user)
+  const { user } = useSelector((state) => state.user)
+  const [mode, setMode] = useState("login"); 
 
 
   const handleClose = () => {
     setOpenAuthModal(false)
   }
-  const handleOpen = () => {
-    setOpenAuthModal(true)
-  }
-
+  const handleOpen = (mode) => {
+    setMode(mode); // Set the mode when opening the modal
+    setOpenAuthModal(true);
+  };
+  const toggleMode = () => {
+    // Toggle between "login" and "register" modes
+    setMode((prevMode) => (prevMode === "login" ? "register" : "login"));
+  };
 
   return (
     <div className="bg-white custom-nav-bar z-50">
@@ -263,10 +271,17 @@ export default function Navbar() {
                     </div>
                   ))}
                 </div>
-
+                {!user && (
+                  <button
+                    onClick={handleOpen}
+                    className="hidden lg:inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                  >
+                    Sign In
+                  </button>
+                )}
                 <div className="space-y-6 border-t border-gray-200 px-4 py-6">
                   <div onClick={handleOpen} className="flow-root">
-                    <a  href="#" className="-m-2 block p-2 font-medium text-gray-900">
+                    <a href="#" className="-m-2 block p-2 font-medium text-gray-900">
                       Sign in
                     </a>
                   </div>
@@ -428,28 +443,30 @@ export default function Navbar() {
 
               <div className="ml-auto flex items-center">
 
-                
 
-              {user ? 
-                  <Link to="/accont" className=' font-medium text-gray-900' >Account</Link>
 
-                    
-                    :
-                    
-           (    
-            <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+                {user ?
+                  <Link to="/account" className=' font-medium text-gray-900' >Account</Link>
 
-            <a onClick={handleOpen} href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-              Sign in
-            </a>
-            <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-            <a href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
-              Create account
-            </a>
-            
-          </div>
-            
-) }
+
+                  :
+
+                  (
+
+
+                    <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
+
+                      <a onClick={() => handleOpen("login")} href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                        Sign in
+                      </a>
+                      <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
+                      <a onClick={() => handleOpen("register")} href="#" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                        Create account
+                      </a>
+
+                    </div>
+
+                  )}
 
 
 
@@ -491,7 +508,14 @@ export default function Navbar() {
           </div>
         </nav>
       </header>
-      <AuthModal handleClose={handleClose} open={openAuthModal} />
+      <AuthModal
+        open={openAuthModal}
+        handleClose={handleClose}
+        mode={mode} // Pass the mode prop to AuthModal
+        LoginFormComponent={LoginForm}
+        RegisterFormComponent={RegisterForm}
+        toggleMode={toggleMode}
+      />
     </div>
   )
 }
