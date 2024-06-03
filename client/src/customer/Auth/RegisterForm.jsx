@@ -71,7 +71,7 @@ const RegisterForm = ({ handleClose }) => {
     if (message) {
       createToast(message, "success");
       dispatch(setMessageEmpty());
-      navigate("/")
+      navigate("/login")
     }
     if (error) {
       createToast(error);

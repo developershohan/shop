@@ -290,7 +290,7 @@ export default function Navbar() {
                       Create account
                     </a>
                   </div>
-                  <Link to="/accont" className='block font-medium text-gray-900' >Account</Link>
+                  <Link to="/account" className='block font-medium text-gray-900' >Account</Link>
                 </div>
 
                 <div className="border-t border-gray-200 px-4 py-6">
