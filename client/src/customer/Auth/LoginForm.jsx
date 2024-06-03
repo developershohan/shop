@@ -4,7 +4,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { useState } from "react";
 import axios from "axios"
 import { useDispatch, useSelector } from "react-redux"
-import { signInPending, signInRejected, signInSuccess } from "../../features/auth/authSlice";
+// import { signInPending, signInRejected, signInSuccess } from "../../features/auth/authSlice";
 import AuthModal from "./AuthModal";
 import RegisterForm from "./RegisterForm";
 

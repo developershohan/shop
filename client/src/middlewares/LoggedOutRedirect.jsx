@@ -1,13 +1,13 @@
-// PrivateRoute.jsx
-import { useSelector } from "react-redux";
-import { Navigate,Outlet } from "react-router-dom";
+// // PrivateRoute.jsx
+// import { useSelector } from "react-redux";
+// import { Navigate,Outlet } from "react-router-dom";
 
-const LoggedOutRedirect = () => {
-  const { loginState, user } = useSelector((state) => state.user);
-console.log(user);
+// const LoggedOutRedirect = () => {
+//   const { loginState, user } = useSelector((state) => state.user);
+// console.log(user);
 
-return loginState ? <Navigate to="/account"/>  : <Outlet/>
+// return loginState ? <Navigate to="/register"/>  : <Outlet/>
 
-};
+// };
 
-export default LoggedOutRedirect;
+// export default LoggedOutRedirect;

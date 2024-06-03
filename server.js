@@ -43,7 +43,12 @@ app.get("*",(req,res)=>{
 
 
 app.use(cookieParser())
-app.use(cors())
+app.use(
+    cors({
+      origin: "http://localhost:5173",
+      credentials: true,
+    })
+  );
 
 
 // error handler

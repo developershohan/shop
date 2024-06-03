@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useSelector, useDispatch } from "react-redux"
-import { signOutSuccess } from '../../../features/auth/authSlice'
+// import { signOutSuccess } from '../../../features/auth/authSlice'
 
 
 const Profile = () => {

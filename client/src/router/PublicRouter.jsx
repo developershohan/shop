@@ -1,5 +1,7 @@
 
 import Layout from '../component/Layout/Layout'
+import LoginForm from '../customer/Auth/LoginForm'
+import RegisterForm from '../customer/Auth/RegisterForm'
 import Cart from '../customer/pages/Cart/Cart'
 import CheckOut from '../customer/pages/CheckOut/CheckOut'
 import Home from '../customer/pages/Home/Home'
@@ -16,11 +18,11 @@ const PublicRouter = [
             },
             {
                 path: "/login",
-                element: <Home/>
+                element: <LoginForm/>
             },
             {
                 path: "/register",
-                element: <Home/>
+                element: <RegisterForm/>
             },
             {
                 path: "/product",
