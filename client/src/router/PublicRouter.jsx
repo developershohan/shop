@@ -37,6 +37,10 @@ const PublicRouter = [
             element: <SingleProduct />,
           },
           {
+            path: "/:lavelOne/:lavelTwo/:lavelThree",
+            element: <Product />,
+          },
+          {
             path: "/cart",
             element: <Cart />,
           },

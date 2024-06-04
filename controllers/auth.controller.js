@@ -245,6 +245,8 @@ console.log(req.me);
  */
 
 export const getLoggedInUser = asyncHandler(async(req, res)=>{
+
+  console.log(req.me);
   if (!req.me) {
     return res.status(404).json({message: 'Logged in user not found'})
   }
